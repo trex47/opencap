@@ -30,6 +30,7 @@ SOFTWARE.
 #include <chrono>
 #include <ctime>
 #include <thread>
+#include <math.h>
 #include <vector>
 #include <iostream>
 #include "opencap_exception.h"
@@ -106,11 +107,11 @@ double AOCAP::eval_box_cap(double x, double y, double z)
 {
     double result = 0;
     if(abs(x)>cap_x)
-   	 result += (abs(x)-cap_x) * (abs(x)-cap_x);
+	 result += abs(x)*abs(x)*(1-0.5*(tanh(abs(x)+cap_x)-tanh(abs(x)-cap_x)));
     if(abs(y)>cap_y)
-   	 result += (abs(y)-cap_y) * (abs(y)-cap_y);
+   	 result += abs(y)*abs(y)*(1-0.5*(tanh(abs(y)+cap_y)-tanh(abs(y)-cap_y)));
     if(abs(z)>cap_z)
-   	 result += (abs(z)-cap_z) * (abs(z)-cap_z);
+   	 result += abs(z)*abs(z)*(1-0.5*(tanh(abs(z)+cap_z)-tanh(abs(z)-cap_z)));
     return result;
 }
 
